@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section id="challenge">
+      <!--
+      Instructions: Below you will find multiple input fields, buttons, and a
+      table. The goal is to capture an item description, amount, and unit price
+      to later add it to the table while calculating the total price, adding it
+      to the last cell.
+      The following conditions should be met:
+        - The user shouldn't be able to add data to the table if one of the
+        fields is missing
+        - All fields should be cleared up once the data is added to the table
+    -->
+
+      <style>
+        input {
+          box-sizing: border-box;
+          display: block;
+          padding: 8px 12px;
+          width: 100%;
+        }
+
+        .btn {
+          appearance: none;
+          border: none;
+          border-radius: 4px;
+          background-color: #dedede;
+          cursor: pointer;
+          font-size: 16px;
+          margin-left: 8px;
+          padding: 8px 12px;
+        }
+
+        .btn:hover {
+          background-color: #dadada;
+        }
+        .btn:active {
+          background-color: #cdcdcd;
+        }
+
+        .container {
+          margin: 50px auto;
+          max-width: 600px;
+          width: 100%;
+        }
+
+        .content-row {
+          margin-bottom: 16px;
+          overflow: hidden;
+          width: 100%;
+        }
+
+        .content-row:last-of-type {
+          text-align: right;
+        }
+      </style>
+
+      <!-- Do not change the markup -->
+      <div class="container">
+        <div class="content-row">
+          <input
+            type="text"
+            name="description"
+            id="description"
+            placeholder="Description"
+          />
+        </div>
+
+        <div class="content-row">
+          <input type="text" name="amount" id="amount" placeholder="Amount" />
+        </div>
+        <div class="content-row">
+          <input type="text" name="price" id="price" placeholder="Price" />
+        </div>
+
+        <div class="content-row">
+          <button class="btn" data-action="action-r">Remove</button>
+          <button class="btn" data-action="action-e">Edit</button>
+          <button class="btn" data-action="action-a">Add</button>
+        </div>
+
+        <table width="600" border="1" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Unit price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <script>
+        const descriptionInput = document.getElementById("description");
+        const amountInput = document.getElementById("amount");
+        const priceInput = document.getElementById("price");
+        const addButton = document.getElementsByClassName("btn");
+        const tableComponent = document.getElementsByTagName("table");
+        const tableBody = tableComponent[0].children[1];
+
+        addButton[2].addEventListener("click", () => {
+          const descriptionValue = descriptionInput.value;
+          const amountValue = amountInput.value;
+          const priceValue = priceInput.value;
+
+          if (descriptionValue == "" || amountValue == "" || priceValue == "")
+            return;
+
+          const rowData = `
+        <tr>
+          <td>${descriptionValue}</td>
+          <td>${amountValue}</td>
+          <td>${priceValue}</td>
+          <td>${amountValue * priceValue}</td>
+        </tr>
+        `;
+          const tableRow = document.createElement("tr");
+          tableBody.innerHTML += rowData;
+          tableBody.appendChild(tableRow);
+
+          descriptionInput.value = "";
+          amountInput.value = "";
+          priceInput.value = "";
+        });
+      </script>
+    </section>
+  </body>
+</html>
